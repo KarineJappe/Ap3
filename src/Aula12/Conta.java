@@ -1,14 +1,38 @@
 package Aula12;
 
-import java.util.Objects;
+import java.util.Scanner;
 
 public class Conta {
-    private double saldo=0;
+    private Cliente titular;
+    private double saldo;
     private int nConta;
     private String senha;
-    private Cliente titular;
-    private double limite=200;
+    private double limite;
 
+
+    public Conta(){
+        System.out.println("Criando Conta");
+    }
+
+    public Conta(Cliente titular){
+        System.out.println("Criando Conta");
+    }
+
+    public void ler(){
+        Scanner tc = new Scanner(System.in);
+        System.out.println("Digite o  numero:");
+        this.setnConta(tc.nextInt());
+        System.out.println("Digite o  saldo inicial:");
+        this.setSaldo(tc.nextDouble());
+        Cliente titular= new Cliente();
+        titular.ler();
+        this.setTitular(titular);
+        if(this.getTitular().getIdade()>60){
+            this.setLimite(1000);
+        }else{
+            this.setLimite(100);
+        }
+    }
 
     public double getSaldo() {
         return saldo;
@@ -49,27 +73,28 @@ public class Conta {
     public boolean equals(Object obj) {
         if (obj instanceof Conta) {
             Conta qualquer = (Conta) obj;
-            return this.titular.getCpf().equals(qualquer.titular.getCpf()) || this.titular.getNome().equals(qualquer.titular.getNome());
+            return this.titular.getCpf().equals(qualquer.titular.getCpf()) ||
+                     this.titular.getNome().equals(qualquer.titular.getNome());
         }else {
             return false;
         }
     }
 
-
     public void setTitular(Cliente titular) {
         this.titular = titular;
     }
 
-    public double setLimite() {
-        if (titular.getIdade() >=60){
-            this.limite = 300;
-        }
-        this.limite = limite;
+    public double getLimite() {
         return limite;
     }
 
+    public void setLimite(double limite) {
+        this.limite = limite;
+    }
+
+
     public boolean deposita(double valor) {
-        if (valor > setLimite()) {
+        if (valor > getLimite()) {
             System.out.println("Limite excedido.");
             return false;
         } else {
